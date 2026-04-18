@@ -110,6 +110,28 @@ TEMPLATE = """
     .wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; }
 
     header { margin-bottom: 48px; }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .header-credit {
+      text-align: right;
+      padding-top: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+    .header-credit strong { color: var(--bone); }
+    .header-credit a {
+      color: var(--amber);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .header-credit a:hover { color: var(--amber-lt); }
+
     .header-eyebrow {
       font-size: 11px; font-weight: 600; letter-spacing: 0.25em;
       text-transform: uppercase; color: var(--amber); margin-bottom: 10px;
@@ -201,8 +223,18 @@ TEMPLATE = """
 <div class="wrap">
 
   <header>
-    <div class="header-eyebrow">Path of Titans — Server Analytics</div>
-    <h1>Species <span>Dashboard</span></h1>
+    <div class="header-top">
+      <div>
+        <div class="header-eyebrow">Path of Titans — Server Analytics</div>
+        <h1>Species <span>Dashboard</span></h1>
+      </div>
+      <div class="header-credit">
+        Made by <strong>WolfofReach</strong><br>
+        <a href="https://github.com/WolfofReach/species_dashboard_public" target="_blank">Dashboard</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/WolfofReach/species-webhook" target="_blank">Webhook</a>
+      </div>
+    </div>
     <div class="header-rule"></div>
   </header>
 
@@ -371,9 +403,9 @@ def index():
         print(f"[ERROR] Database query failed: {e}")
         species_data, diet_data, top_herbi, top_carni = [], [], [], []
 
-    total_spawns  = sum(r["count"] for r in species_data)
-    carni_total   = next((r["total"] for r in diet_data if r["diet"] == "carnivore"), 0)
-    herbi_total   = next((r["total"] for r in diet_data if r["diet"] == "herbivore"), 0)
+    total_spawns   = sum(r["count"] for r in species_data)
+    carni_total    = next((r["total"] for r in diet_data if r["diet"] == "carnivore"), 0)
+    herbi_total    = next((r["total"] for r in diet_data if r["diet"] == "herbivore"), 0)
     species_labels = [r["species"] for r in species_data]
     species_counts = [r["count"]   for r in species_data]
     diet_labels    = [r["diet"].capitalize() for r in diet_data]
